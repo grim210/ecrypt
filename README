@@ -1,0 +1,16 @@
+This project is meant to implement a lot of strong cryptographic standards
+while also being easy to use, easy to read and easy to audit.  It uses
+standard libraries where possible, and attempts to encapsulate and separate
+code as best as possible.
+
+Feel free to help!  If you find mistakes, please let me know and I will fix
+them when I get time.  Try to avoid excessive optimization.  As stated above,
+I'm trying to make it easy to read and understand.
+
+It should be worth saying that I don't claim responsibility for any loss or
+damage of property from using this code.  I'm an amateur in every way to
+cryptography, so use this software at your own risk.
+
+For licensing requirements, see the COPYING file of the root directory of the
+project.
+

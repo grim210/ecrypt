@@ -1,0 +1,9 @@
+bf_test
+pbkdf2_test
+*so
+*dll
+*exe
+*o
+*tmp
+*~
+*swp
