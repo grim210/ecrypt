@@ -1,4 +1,5 @@
-#include "blowfish.h"           /* defines the functions in this source file */
+#include "bfcrypt.h"           /* defines the functions in this source file */
+#include <string.h>
 
 /* P box for blowfish encryption */
 const uint32_t DEFAULT_P[18] = {
@@ -297,7 +298,7 @@ int blowfish_decrypt(struct blowfish_context_t* ctx, const uint8_t* iv,
 
     /* ensure that the input is padded to the proper length before-hand. */
     if (ct_len % 8 != 0) {
-        return BF_INVALID_LENGTH;
+        return BFCRYPT_INVALID_LENGTH;
     }
 
     /* clear the stack-allocated buffer, there are probably situations
@@ -330,7 +331,7 @@ int blowfish_decrypt(struct blowfish_context_t* ctx, const uint8_t* iv,
     memset(buf, 0, 8);
     ivl = ivr = tl = tr = rl = rr = 0;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int blowfish_encrypt(struct blowfish_context_t* ctx, const uint8_t* iv,
@@ -342,11 +343,11 @@ int blowfish_encrypt(struct blowfish_context_t* ctx, const uint8_t* iv,
     uint32_t i;
 
     if (pt_len % 8 != 0) {
-        return BF_INVALID_LENGTH;
+        return BFCRYPT_INVALID_LENGTH;
     }
 
     if (out == NULL || ctx == NULL) {
-        return BF_NULL_PTR;
+        return BFCRYPT_NULL_PTR;
     }
 
     memset(buf, 0, 8);
@@ -369,7 +370,7 @@ int blowfish_encrypt(struct blowfish_context_t* ctx, const uint8_t* iv,
     memset(buf, 0, 8);
     tl = tr = ivl = ivr = i = 0;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int blowfish_decrypt_ecb(struct blowfish_context_t* ctx, const uint8_t* ct,
@@ -384,7 +385,7 @@ int blowfish_decrypt_ecb(struct blowfish_context_t* ctx, const uint8_t* ct,
         _blowfish_block_to_bytes(tl, tr, &out[i*8]);
     }
 
-    return BF_UNTESTED;
+    return BFCRYPT_UNTESTED;
 }
 
 int blowfish_encrypt_ecb(struct blowfish_context_t* ctx, const uint8_t* pt,
@@ -399,7 +400,7 @@ int blowfish_encrypt_ecb(struct blowfish_context_t* ctx, const uint8_t* pt,
         _blowfish_block_to_bytes(tl, tr, &out[i*8]);
     }
 
-    return BF_UNTESTED;
+    return BFCRYPT_UNTESTED;
 }
 
 int blowfish_init(struct blowfish_context_t* ctx, const uint8_t* key,
@@ -410,16 +411,16 @@ int blowfish_init(struct blowfish_context_t* ctx, const uint8_t* key,
     uint32_t dl, dr;
 
     if (ctx == NULL) {
-        return BF_NULL_PTR;
+        return BFCRYPT_NULL_PTR;
     }
 
     if (key == NULL) {
-        return BF_NULL_PTR;
+        return BFCRYPT_NULL_PTR;
     }
 
     /* 32-bit minimum (4 bytes :| ..), 448-bit maximum */
     if (length < 4 || length > 56) {
-        return BF_INVALID_LENGTH;
+        return BFCRYPT_INVALID_LENGTH;
     }
 
     for (i = 0; i < 18; i++) {
@@ -463,7 +464,7 @@ int blowfish_init(struct blowfish_context_t* ctx, const uint8_t* key,
         }
     }
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int blowfish_end(struct blowfish_context_t* ctx)
@@ -471,7 +472,7 @@ int blowfish_end(struct blowfish_context_t* ctx)
     memset(ctx->P, 0, BLOWFISH_P_LENGTH);
     memset(ctx->S, 0, BLOWFISH_S_LENGTH);
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 /* private function definitions */
@@ -497,7 +498,7 @@ int _blowfish_f(struct blowfish_context_t* ctx, uint32_t x, uint32_t* out)
 
     out[0] = t;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int _blowfish_block_encrypt(struct blowfish_context_t* ctx,
@@ -515,7 +516,7 @@ int _blowfish_block_encrypt(struct blowfish_context_t* ctx,
     for (i = 0; i < 16; i++) {
         tl = tl ^ ctx->P[i];
         result = _blowfish_f(ctx, tl, &temp);
-        if (result != BF_NO_ERROR) {
+        if (result != BFCRYPT_NO_ERROR) {
             return result;
         }
         tr = tr ^ temp;
@@ -535,7 +536,7 @@ int _blowfish_block_encrypt(struct blowfish_context_t* ctx,
     l[0] = tl;
     r[0] = tr;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int _blowfish_block_decrypt(struct blowfish_context_t* ctx,
@@ -553,7 +554,7 @@ int _blowfish_block_decrypt(struct blowfish_context_t* ctx,
     for (i = 17; i > 1; i--) {
         tl = tl ^ ctx->P[i];
         result = _blowfish_f(ctx, tl, &temp);
-        if (result != BF_NO_ERROR) {
+        if (result != BFCRYPT_NO_ERROR) {
             return result;
         }
 
@@ -575,7 +576,7 @@ int _blowfish_block_decrypt(struct blowfish_context_t* ctx,
     l[0] = tl;
     r[0] = tr;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int _blowfish_bytes_to_block(const uint8_t* in, uint32_t* l, uint32_t* r)
@@ -598,13 +599,13 @@ int _blowfish_bytes_to_block(const uint8_t* in, uint32_t* l, uint32_t* r)
     l[0] = tl;
     r[0] = tr;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 
 int _blowfish_block_to_bytes(uint32_t l, uint32_t r, uint8_t* out)
 {
     if (out == NULL) {
-        return BF_NULL_PTR;
+        return BFCRYPT_NULL_PTR;
     }
 
     out[0] = (l >> 24) & 0xFF;
@@ -617,6 +618,6 @@ int _blowfish_block_to_bytes(uint32_t l, uint32_t r, uint8_t* out)
     out[6] = (r >> 8) & 0xFF;
     out[7] = (r >> 0) & 0xFF;
 
-    return BF_NO_ERROR;
+    return BFCRYPT_NO_ERROR;
 }
 

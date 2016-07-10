@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "pbkdf2.h"
+#include "bfcrypt.h"
 
 /* for those magic SHA256 numbers.. */
 #define SHA256_BLOCK_SIZE       (64)
@@ -64,7 +64,7 @@ void hmac_sha256(const uint8_t* key, size_t klen, const uint8_t* message,
 /* function definitions */
 
 /* inspired by 'pkcs5_pbkdf2.c' of the OpenBSD project. */
-void pbkdf2_hmac_sha256(const uint8_t* pass, size_t plen, const uint8_t* salt,
+int pbkdf2_hmac_sha256(const uint8_t* pass, size_t plen, const uint8_t* salt,
     size_t slen, uint8_t* out, size_t olen, uint32_t rounds)
 {
     uint8_t* asalt;
@@ -76,7 +76,7 @@ void pbkdf2_hmac_sha256(const uint8_t* pass, size_t plen, const uint8_t* salt,
 
     /* I need ERROR CODES!! */
     if (rounds < 1 || olen == 0 || slen == 0) {
-        return;
+        return BFCRYPT_INVALID_PARAMETERS;
     }
 
     /* I really don't want to touch the heap.  I may put an upper limit to the
@@ -122,6 +122,8 @@ void pbkdf2_hmac_sha256(const uint8_t* pass, size_t plen, const uint8_t* salt,
     memset(obuf, 0, SHA256_DIGEST_LENGTH);
 
     free(asalt);
+
+    return BFCRYPT_NO_ERROR;
 }
 
 void sha256_finalize(struct sha256_context_t* ctx, uint8_t* hash)
