@@ -1,5 +1,5 @@
-#ifndef BLOWFISH_H
-#define BLOWFISH_H
+#ifndef BFCRYPT_BLOWFISH_H
+#define BFCRYPT_BLOWFISH_H
 
 /* for memcpy and memset */
 #include <stdint.h>
@@ -130,5 +130,5 @@ int blowfish_decrypt_ecb(struct blowfish_context_t* context, const uint8_t* ct,
 int blowfish_encrypt_ecb(struct blowfish_context_t* context, const uint8_t* pt,
   uint32_t pt_len, uint8_t* out);
 
-#endif
+#endif  /* BFCRYPT_BLOWFISH_H */
 
