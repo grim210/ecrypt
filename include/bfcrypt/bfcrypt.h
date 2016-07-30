@@ -3,6 +3,7 @@
 
 // fixed width types are a must in this context
 #include <stdint.h>
+#include <stdlib.h>
 
 #define BFCRYPT_NO_ERROR            (0)
 #define BFCRYPT_UNTESTED            (1)
