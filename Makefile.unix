@@ -1,0 +1,12 @@
+all:
+	cd src; make -f Makefile.unix
+	cd test; make -f Makefile.unix
+
+clean:
+	cd src; make -f Makefile.unix clean
+	cd test; make -f Makefile.unix clean
+
+distclean:
+	cd src; make -f Makefile.unix distclean
+	cd test; make -f Makefile.unix distclean
+
