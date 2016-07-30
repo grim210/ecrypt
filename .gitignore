@@ -1,5 +1,6 @@
 bf_test
 pbkdf2_test
+Makefile
 *so
 *dll
 *exe
