@@ -1,7 +1,10 @@
 /* This file is meant to act as a way to compare the results from this library
  * to the test vectors provided by Bruce Schnier's blog */
 #include <stdio.h>
-#include "blowfish.h"
+#include <stdlib.h>
+#include <string.h>
+
+#include <bfcrypt/bfcrypt.h>
 
 const unsigned char ivc[8] = {
     0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10

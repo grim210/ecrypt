@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "pbkdf2.h"
+#include <bfcrypt/bfcrypt.h>
 
 #define DEFAULT_PASS    ("password")
 #define DEFAULT_SALT    ("salt")
