@@ -1,7 +1,7 @@
 #ifndef BFCRYPT_H
 #define BFCRYPT_H
 
-// fixed width types are a must in this context
+/* fixed width types are a must in this context */
 #include <stdint.h>
 #include <stdlib.h>
 

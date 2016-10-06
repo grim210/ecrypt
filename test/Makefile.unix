@@ -1,7 +1,7 @@
 BFTEST=blowfish_test
 KDFTEST=pbkdf2_test
 CC=gcc
-CCFLAGS=-c -std=c99 -Wall -Werror -I../include/
+CCFLAGS=-c -std=c89 -Wall -Werror -I../include/
 LD=gcc
 LDFLAGS=-lbfcrypt-0 -L../src/
 RM=rm -rf
