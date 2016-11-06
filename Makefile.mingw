@@ -1,0 +1,12 @@
+all:
+	cd src; make -f Makefile.mingw
+	cd test; make -f Makefile.mingw
+
+clean:
+	cd src; make -f Makefile.mingw clean
+	cd test; make -f Makefile.mingw clean
+
+distclean:
+	cd src; make -f Makefile.mingw distclean
+	cd test; make -f Makefile.mingw distclean
+

@@ -7,7 +7,7 @@
 #define DEFAULT_PASS    ("password")
 #define DEFAULT_SALT    ("salt")
 #define DEFAULT_ROUNDS  (4096)
-#define DEFAULT_LENGTH  (32)
+#define DEFAULT_LENGTH  (256)
 
 int main(int argc, char* argv[])
 {
@@ -25,7 +25,7 @@ int main(int argc, char* argv[])
         fprintf(stdout, "pass: %s\n", pass);
         fprintf(stdout, "salt: %s\n", salt);
         fprintf(stdout, "rounds: %d\n", c);
-        fprintf(stdout, "length: %d bytes\n", len);
+        fprintf(stdout, "length: %d bits\n", len);
     }
 
     for (i = 1; i < argc; ++i) {
@@ -57,6 +57,12 @@ int main(int argc, char* argv[])
             continue;
         }
     }
+
+    if (len % 8 != 0) {
+        fprintf(stderr, "Length should be a multiple of 8.\n");
+        exit(EXIT_FAILURE);
+    }
+    len /= 8;
 
     /* this is where it determines that it's in bytes, could easily be changed
      * to work in bits.  ie: len / 8..  May do that, as when we work with keys
