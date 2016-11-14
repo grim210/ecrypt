@@ -25,22 +25,23 @@
  * OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef __RIJNDAEL_H
-#define __RIJNDAEL_H
+#ifndef ECRYPT_RIJNDAEL_H
+#define ECRYPT_RIJNDAEL_H
 
 #define AES_MAXKEYBITS	(256)
 #define AES_MAXKEYBYTES	(AES_MAXKEYBITS/8)
 /* for 256-bit keys, fewer for less */
 #define AES_MAXROUNDS	14
 
+/* XXX: incorporate stdint.h types. */
 typedef unsigned char	u8;
 typedef unsigned short	u16;
 typedef unsigned int	u32;
 
 /*  The structure for key information */
 typedef struct {
-	int	enc_only;		/* context contains only encrypt schedule */
-	int	Nr;			/* key-length-dependent number of rounds */
+	int	enc_only;	/* context contains only encrypt schedule */
+	int	Nr;		/* key-length-dependent number of rounds */
 	u32	ek[4*(AES_MAXROUNDS + 1)];	/* encrypt key schedule */
 	u32	dk[4*(AES_MAXROUNDS + 1)];	/* decrypt key schedule */
 } rijndael_ctx;
@@ -55,4 +56,4 @@ int	rijndaelKeySetupDec(unsigned int [], const unsigned char [], int);
 void	rijndaelEncrypt(const unsigned int [], int, const unsigned char [],
 	    unsigned char []);
 
-#endif /* __RIJNDAEL_H */
+#endif /* ECRYPT_RIJNDAEL_H */
