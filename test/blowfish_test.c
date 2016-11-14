@@ -28,18 +28,6 @@ int test_ecb(void);
 
 int main(int argc, char* argv[])
 {
-    fprintf(stdout, "********Integer Widths********\n");
-    fprintf(stdout, "unsigned char is %u\n",
-        (unsigned int)sizeof(unsigned char));
-    fprintf(stdout, "unsigned short is %u\n",
-        (unsigned int)sizeof(unsigned short));
-    fprintf(stdout, "unsigned int is %u\n",
-        (unsigned int)sizeof(unsigned int));
-    fprintf(stdout, "unsigned long is %u\n",
-        (unsigned int)sizeof(unsigned long));
-    fprintf(stdout, "unsigned long long is %u\n",
-        (unsigned int)sizeof(unsigned long long));
-
     fprintf(stdout, "********Simple ECB Test Vector********\n");
     test_ecb();
 

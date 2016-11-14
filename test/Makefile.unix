@@ -21,7 +21,7 @@ pbkdf2_test.o: pbkdf2_test.c
 	$(CC) $(CCFLAGS) pbkdf2_test.c -o pbkdf2_test.o
 
 clean:
-	$(RM) *o
+	$(RM) $(BFTEST).o $(KDFTEST).o
 
 distclean:
-	$(RM) $(BFTEST) $(KDFTEST) *o
+	$(RM) $(BFTEST).o $(KDFTEST).o $(BFTEST) $(KDFTEST)

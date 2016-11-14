@@ -24,8 +24,8 @@ rijndael.o: rijndael.c
 	$(CC) $(CCFLAGS) rijndael.c -o rijndael.o
 
 clean:
-	$(RM) $(OBJS) *o
+	$(RM) $(OBJS)
 
 distclean:
-	$(RM) $(OBJS) *o $(TARGET)
+	$(RM) $(OBJS) $(TARGET)
 
