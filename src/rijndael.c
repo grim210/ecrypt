@@ -603,7 +603,7 @@ rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey, int keyBits)
 	rk[2] = GETU32(cipherKey +  8);
 	rk[3] = GETU32(cipherKey + 12);
 	if (keyBits == 128) {
-		for (;;) {
+		while (1) {
 			temp  = rk[3];
 			rk[4] = rk[0] ^
 				(Te2[(temp >> 16) & 0xff] & 0xff000000) ^
@@ -623,7 +623,7 @@ rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey, int keyBits)
 	rk[4] = GETU32(cipherKey + 16);
 	rk[5] = GETU32(cipherKey + 20);
 	if (keyBits == 192) {
-		for (;;) {
+		while (1) {
 			temp = rk[ 5];
 			rk[ 6] = rk[ 0] ^
 				(Te2[(temp >> 16) & 0xff] & 0xff000000) ^
@@ -645,7 +645,7 @@ rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey, int keyBits)
 	rk[6] = GETU32(cipherKey + 24);
 	rk[7] = GETU32(cipherKey + 28);
 	if (keyBits == 256) {
-		for (;;) {
+		while (1) {
 			temp = rk[ 7];
 			rk[ 8] = rk[ 0] ^
 				(Te2[(temp >> 16) & 0xff] & 0xff000000) ^
@@ -685,17 +685,20 @@ rijndaelKeySetupDec(uint32_t *rk, const uint8_t *cipherKey, int keyBits)
 	int Nr, i, j;
 	uint32_t temp;
 
-	/* expand the cipher key: */
+	/* Expand the cipher key: */
 	Nr = rijndaelKeySetupEnc(rk, cipherKey, keyBits);
 
-	/* invert the order of the round keys: */
+	/* Invert the order of the round keys: */
 	for (i = 0, j = 4*Nr; i < j; i += 4, j -= 4) {
 		temp = rk[i    ]; rk[i    ] = rk[j    ]; rk[j    ] = temp;
 		temp = rk[i + 1]; rk[i + 1] = rk[j + 1]; rk[j + 1] = temp;
 		temp = rk[i + 2]; rk[i + 2] = rk[j + 2]; rk[j + 2] = temp;
 		temp = rk[i + 3]; rk[i + 3] = rk[j + 3]; rk[j + 3] = temp;
 	}
-	/* apply the inverse MixColumn transform to all round keys but the first and the last: */
+	/*
+	* Apply the inverse MixColumn transform to all round keys except
+	* the first and the last:
+	*/
 	for (i = 1; i < Nr; i++) {
 		rk += 4;
 		rk[0] =
@@ -734,77 +737,76 @@ rijndaelEncrypt(const uint32_t *rk, int Nr, const uint8_t pt[16],
 	uint32_t s0, s1, s2, s3, t0, t1, t2, t3;
 	int r;
 
-    /*
-	 * map byte array block to cipher state
-	 * and add initial round key:
-	 */
+	/*
+	* Map byte array block to cipher state
+	* and add initial round key:
+	*/
 	s0 = GETU32(pt     ) ^ rk[0];
 	s1 = GETU32(pt +  4) ^ rk[1];
 	s2 = GETU32(pt +  8) ^ rk[2];
 	s3 = GETU32(pt + 12) ^ rk[3];
 
-    r = Nr >> 1;
-    for (;;) {
-	t0 =
-	    Te0[(s0 >> 24)       ] ^
-	    Te1[(s1 >> 16) & 0xff] ^
-	    Te2[(s2 >>  8) & 0xff] ^
-	    Te3[(s3      ) & 0xff] ^
-	    rk[4];
-	t1 =
-	    Te0[(s1 >> 24)       ] ^
-	    Te1[(s2 >> 16) & 0xff] ^
-	    Te2[(s3 >>  8) & 0xff] ^
-	    Te3[(s0      ) & 0xff] ^
-	    rk[5];
-	t2 =
-	    Te0[(s2 >> 24)       ] ^
-	    Te1[(s3 >> 16) & 0xff] ^
-	    Te2[(s0 >>  8) & 0xff] ^
-	    Te3[(s1      ) & 0xff] ^
-	    rk[6];
-	t3 =
-	    Te0[(s3 >> 24)       ] ^
-	    Te1[(s0 >> 16) & 0xff] ^
-	    Te2[(s1 >>  8) & 0xff] ^
-	    Te3[(s2      ) & 0xff] ^
-	    rk[7];
+	r = Nr >> 1;
+	while (1) {
+		t0 =
+		    Te0[(s0 >> 24)       ] ^
+		    Te1[(s1 >> 16) & 0xff] ^
+		    Te2[(s2 >>  8) & 0xff] ^
+		    Te3[(s3      ) & 0xff] ^
+		    rk[4];
+		t1 =
+		    Te0[(s1 >> 24)       ] ^
+		    Te1[(s2 >> 16) & 0xff] ^
+		    Te2[(s3 >>  8) & 0xff] ^
+		    Te3[(s0      ) & 0xff] ^
+		    rk[5];
+		t2 =
+		    Te0[(s2 >> 24)       ] ^
+		    Te1[(s3 >> 16) & 0xff] ^
+		    Te2[(s0 >>  8) & 0xff] ^
+		    Te3[(s1      ) & 0xff] ^
+		    rk[6];
+		t3 =
+		    Te0[(s3 >> 24)       ] ^
+		    Te1[(s0 >> 16) & 0xff] ^
+		    Te2[(s1 >>  8) & 0xff] ^
+		    Te3[(s2      ) & 0xff] ^
+		    rk[7];
 
-	rk += 8;
-	if (--r == 0) {
-	    break;
+		rk += 8;
+		if (--r == 0) {
+			break;
+		}
+
+		s0 =
+		    Te0[(t0 >> 24)       ] ^
+		    Te1[(t1 >> 16) & 0xff] ^
+		    Te2[(t2 >>  8) & 0xff] ^
+		    Te3[(t3      ) & 0xff] ^
+		    rk[0];
+		s1 =
+		    Te0[(t1 >> 24)       ] ^
+		    Te1[(t2 >> 16) & 0xff] ^
+		    Te2[(t3 >>  8) & 0xff] ^
+		    Te3[(t0      ) & 0xff] ^
+		    rk[1];
+		s2 =
+		    Te0[(t2 >> 24)       ] ^
+		    Te1[(t3 >> 16) & 0xff] ^
+		    Te2[(t0 >>  8) & 0xff] ^
+		    Te3[(t1      ) & 0xff] ^
+		    rk[2];
+		s3 =
+		    Te0[(t3 >> 24)       ] ^
+		    Te1[(t0 >> 16) & 0xff] ^
+		    Te2[(t1 >>  8) & 0xff] ^
+		    Te3[(t2      ) & 0xff] ^
+		    rk[3];
 	}
 
-	s0 =
-	    Te0[(t0 >> 24)       ] ^
-	    Te1[(t1 >> 16) & 0xff] ^
-	    Te2[(t2 >>  8) & 0xff] ^
-	    Te3[(t3      ) & 0xff] ^
-	    rk[0];
-	s1 =
-	    Te0[(t1 >> 24)       ] ^
-	    Te1[(t2 >> 16) & 0xff] ^
-	    Te2[(t3 >>  8) & 0xff] ^
-	    Te3[(t0      ) & 0xff] ^
-	    rk[1];
-	s2 =
-	    Te0[(t2 >> 24)       ] ^
-	    Te1[(t3 >> 16) & 0xff] ^
-	    Te2[(t0 >>  8) & 0xff] ^
-	    Te3[(t1      ) & 0xff] ^
-	    rk[2];
-	s3 =
-	    Te0[(t3 >> 24)       ] ^
-	    Te1[(t0 >> 16) & 0xff] ^
-	    Te2[(t1 >>  8) & 0xff] ^
-	    Te3[(t2      ) & 0xff] ^
-	    rk[3];
-    }
-
-    /*
-	 * apply last round and
-	 * map cipher state to byte array block:
-	 */
+	/*
+	* Apply last round and map cipher state to byte array block:
+	*/
 	s0 =
 		(Te2[(t0 >> 24)       ] & 0xff000000) ^
 		(Te3[(t1 >> 16) & 0xff] & 0x00ff0000) ^
@@ -812,6 +814,7 @@ rijndaelEncrypt(const uint32_t *rk, int Nr, const uint8_t pt[16],
 		(Te1[(t3      ) & 0xff] & 0x000000ff) ^
 		rk[0];
 	PUTU32(ct     , s0);
+
 	s1 =
 		(Te2[(t1 >> 24)       ] & 0xff000000) ^
 		(Te3[(t2 >> 16) & 0xff] & 0x00ff0000) ^
@@ -819,6 +822,7 @@ rijndaelEncrypt(const uint32_t *rk, int Nr, const uint8_t pt[16],
 		(Te1[(t0      ) & 0xff] & 0x000000ff) ^
 		rk[1];
 	PUTU32(ct +  4, s1);
+
 	s2 =
 		(Te2[(t2 >> 24)       ] & 0xff000000) ^
 		(Te3[(t3 >> 16) & 0xff] & 0x00ff0000) ^
@@ -826,6 +830,7 @@ rijndaelEncrypt(const uint32_t *rk, int Nr, const uint8_t pt[16],
 		(Te1[(t1      ) & 0xff] & 0x000000ff) ^
 		rk[2];
 	PUTU32(ct +  8, s2);
+
 	s3 =
 		(Te2[(t3 >> 24)       ] & 0xff000000) ^
 		(Te3[(t0 >> 16) & 0xff] & 0x00ff0000) ^
