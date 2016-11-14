@@ -1,4 +1,4 @@
-bf_test
+blowfish_test
 pbkdf2_test
 Makefile
 *a
