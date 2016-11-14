@@ -7,12 +7,12 @@
 
 #include "global.h"
 
-#define BLOWFISH_P_LENGTH           (18)
-#define BLOWFISH_S_LENGTH           (1024)
+#define BLOWFISH_P_LENGTH		(18)
+#define BLOWFISH_S_LENGTH		(1024)
 
 struct blowfish_context_t {
-    uint32_t P[BLOWFISH_P_LENGTH];
-    uint32_t S[BLOWFISH_S_LENGTH];
+	uint32_t P[BLOWFISH_P_LENGTH];
+	uint32_t S[BLOWFISH_S_LENGTH];
 };
 
 /* blowfish_end:
@@ -47,7 +47,7 @@ int blowfish_end(struct blowfish_context_t* context);
  *         the top of this header file.
  *****************************************************************************/
 int blowfish_init(struct blowfish_context_t* ctx, const uint8_t* key,
-  uint32_t klen);
+    uint32_t klen);
 
 /* blowfish_decrypt:
  *
@@ -67,7 +67,7 @@ int blowfish_init(struct blowfish_context_t* ctx, const uint8_t* key,
  *     int: error code.  If everything went well, should return BF_NO_ERROR
  *****************************************************************************/
 int blowfish_decrypt(struct blowfish_context_t* context, const uint8_t* iv, 
-  const uint8_t* ct, uint32_t ct_len, uint8_t* out);
+    const uint8_t* ct, uint32_t ct_len, uint8_t* out);
 
 /* blowfish_encrypt:
  *
@@ -87,7 +87,7 @@ int blowfish_decrypt(struct blowfish_context_t* context, const uint8_t* iv,
  *     int: error code.  If everything went well, should return BF_NO_ERROR
  *****************************************************************************/
 int blowfish_encrypt(struct blowfish_context_t* context, const uint8_t* iv,
-  const uint8_t* pt, uint32_t pt_len, uint8_t* out);
+    const uint8_t* pt, uint32_t pt_len, uint8_t* out);
 
 /* blowfish_decrypt_ecb:
  *
@@ -106,7 +106,7 @@ int blowfish_encrypt(struct blowfish_context_t* context, const uint8_t* iv,
  *     int: error code.  If everything went well, should return BF_NO_ERROR
  *****************************************************************************/
 int blowfish_decrypt_ecb(struct blowfish_context_t* context, const uint8_t* ct,
-  uint32_t ct_len, uint8_t* out);
+    uint32_t ct_len, uint8_t* out);
 
 /* blowfish_encrypt_ecb:
  *

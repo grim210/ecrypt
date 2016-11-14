@@ -620,4 +620,3 @@ int _blowfish_block_to_bytes(uint32_t l, uint32_t r, uint8_t* out)
 
     return ECRYPT_NO_ERROR;
 }
-
