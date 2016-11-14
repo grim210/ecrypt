@@ -28,15 +28,14 @@
 #ifndef ECRYPT_RIJNDAEL_H
 #define ECRYPT_RIJNDAEL_H
 
-#define AES_MAXKEYBITS	(256)
-#define AES_MAXKEYBYTES	(AES_MAXKEYBITS/8)
-/* for 256-bit keys, fewer for less */
-#define AES_MAXROUNDS	14
+#include <stdint.h>
+#include "global.h"
 
-/* XXX: incorporate stdint.h types. */
-typedef unsigned char	u8;
-typedef unsigned short	u16;
-typedef unsigned int	u32;
+/* XXX: A placeholder for when I find-and-replace all instances. */
+typedef uint8_t		u_char;
+typedef uint8_t		u8;
+typedef uint16_t	u16;
+typedef uint32_t	u32;
 
 /*  The structure for key information */
 typedef struct {

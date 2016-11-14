@@ -26,10 +26,6 @@
  * EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/* XXX: What are these includes used for? */
-#include <sys/param.h>
-#include <sys/systm.h>
-
 #include "rijndael.h"
 
 #undef FULL_UNROLL
@@ -627,7 +623,7 @@ static const uint32_t rcon[] = {
 	0x1B000000, 0x36000000
 };
 
-#define GETU32(pt) (((u32)(pt)[0] << 24) ^ ((u32)(pt)[1] << 16) ^ ((u32)(pt)[2] <<  8) ^ ((u32)(pt)[3]))
+#define GETU32(pt) (((uint32_t)(pt)[0] << 24) ^ ((uint32_t)(pt)[1] << 16) ^ ((uint32_t)(pt)[2] <<  8) ^ ((uint32_t)(pt)[3]))
 #define PUTU32(ct, st) { (ct)[0] = (u8)((st) >> 24); (ct)[1] = (u8)((st) >> 16); (ct)[2] = (u8)((st) >>  8); (ct)[3] = (u8)(st); }
 
 /**
@@ -639,7 +635,7 @@ int
 rijndaelKeySetupEnc(uint32_t *rk, const uint8_t *cipherKey, int keyBits)
 {
    	int i = 0;
-	u32 temp;
+	uint32_t temp;
 
 	rk[0] = GETU32(cipherKey     );
 	rk[1] = GETU32(cipherKey +  4);
@@ -726,7 +722,7 @@ int
 rijndaelKeySetupDec(uint32_t *rk, const uint8_t *cipherKey, int keyBits)
 {
 	int Nr, i, j;
-	u32 temp;
+	uint32_t temp;
 
 	/* expand the cipher key: */
 	Nr = rijndaelKeySetupEnc(rk, cipherKey, keyBits);
@@ -769,7 +765,7 @@ void
 rijndaelEncrypt(const uint32_t *rk, int Nr, const uint8_t pt[16],
     uint8_t ct[16])
 {
-	u32 s0, s1, s2, s3, t0, t1, t2, t3;
+	uint32_t s0, s1, s2, s3, t0, t1, t2, t3;
 #ifndef FULL_UNROLL
     int r;
 #endif /* ?FULL_UNROLL */
@@ -953,7 +949,7 @@ static void
 rijndaelDecrypt(const uint32_t *rk, int Nr, const uint8_t ct[16],
     uint8_t pt[16])
 {
-	u32 s0, s1, s2, s3, t0, t1, t2, t3;
+	uint32_t s0, s1, s2, s3, t0, t1, t2, t3;
 #ifndef FULL_UNROLL
     int r;
 #endif /* ?FULL_UNROLL */
