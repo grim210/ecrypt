@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <bfcrypt/bfcrypt.h>
+#include <ecrypt/blowfish.h>
 
 const unsigned char ivc[8] = {
     0xFE, 0xDC, 0xBA, 0x98, 0x76, 0x54, 0x32, 0x10

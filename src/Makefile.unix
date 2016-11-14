@@ -1,6 +1,6 @@
-TARGET=libbfcrypt-0.a
+TARGET=libecrypt-0.a
 CC=gcc
-CCFLAGS=-c -std=c89 -Wall -Werror -I../include/bfcrypt
+CCFLAGS=-c -std=c89 -Wall -Werror -I../include/ecrypt
 AR=ar rcs
 RANLIB=ranlib
 RM=rm -rf

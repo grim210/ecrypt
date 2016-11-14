@@ -3,7 +3,7 @@ KDFTEST=pbkdf2_test
 CC=gcc
 CCFLAGS=-c -std=c89 -Wall -Werror -I../include/
 LD=gcc
-LDFLAGS=-lbfcrypt-0 -L../src/
+LDFLAGS=-lecrypt-0 -L../src/
 RM=rm -rf
 
 all: $(BFTEST) $(KDFTEST)

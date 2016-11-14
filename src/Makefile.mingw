@@ -1,6 +1,6 @@
-TARGET=libbfcrypt-0.dll
+TARGET=libecrypt-0.dll
 CC=gcc
-CCFLAGS=-c -std=c99 -Wall -Werror -I../include/bfcrypt
+CCFLAGS=-c -std=c99 -Wall -Werror -I../include/ecrypt
 LD=gcc
 LDFLAGS=-lm
 RM=rm -rf

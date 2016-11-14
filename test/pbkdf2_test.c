@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <bfcrypt/bfcrypt.h>
+#include <ecrypt/kdf.h>
 
 #define DEFAULT_PASS    ("password")
 #define DEFAULT_SALT    ("salt")

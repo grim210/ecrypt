@@ -3,11 +3,11 @@ KDFTEST=pbkdf2_test
 CC=gcc
 CCFLAGS=-c -std=c99 -Wall -Werror -I../include/
 LD=gcc
-LDFLAGS=-lbfcrypt-0 -L../src/
+LDFLAGS=-lecrypt-0 -L../src/
 RM=rm -rf
 
 all: $(BFTEST) $(KDFTEST)
-	cp ../src/libbfcrypt-0.dll .
+	cp ../src/libecrypt-0.dll .
 
 $(BFTEST): blowfish_test.o
 	$(LD) blowfish_test.o -o $(BFTEST) $(LDFLAGS)
@@ -25,4 +25,4 @@ clean:
 	$(RM) *o
 
 distclean:
-	$(RM) $(BFTEST) $(KDFTEST) *o ./libbfcrypt-0.dll
+	$(RM) $(BFTEST) $(KDFTEST) *o ./libecrypt-0.dll
