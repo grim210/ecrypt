@@ -1,4 +1,4 @@
-#include "blowfish.h"           /* defines the functions in this source file */
+#include <ecrypt/blowfish.h>
 #include <string.h>
 
 /* P box for blowfish encryption */

@@ -1,10 +1,2 @@
-blowfish_test
-pbkdf2_test
-Makefile
-*a
-*dll
-*exe
-*o
-*tmp
-*~
-*swp
+build
+*.swp

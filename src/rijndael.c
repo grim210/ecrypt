@@ -1,4 +1,4 @@
-#include "rijndael.h"
+#include <ecrypt/rijndael.h>
 
 static const uint32_t Te0[256] = {
 	0xc66363a5U, 0xf87c7c84U, 0xee777799U, 0xf67b7b8dU,

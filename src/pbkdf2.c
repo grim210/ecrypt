@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "kdf.h"
+#include <ecrypt/kdf.h>
 
 /* for those magic SHA256 numbers.. */
 #define SHA256_BLOCK_SIZE       (64)
