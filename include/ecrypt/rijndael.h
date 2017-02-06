@@ -6,17 +6,17 @@
 
 /*  The structure for key information */
 typedef struct {
-	int enc_only;	/* context contains only encrypt schedule */
-	int Nr;		/* key-length-dependent number of rounds */
-	uint32_t ek[4*(AES_MAXROUNDS + 1)];	/* encrypt key schedule */
-	uint32_t dk[4*(AES_MAXROUNDS + 1)];	/* decrypt key schedule */
+    int enc_only;	/* context contains only encrypt schedule */
+    int Nr;		/* key-length-dependent number of rounds */
+    uint32_t ek[4*(AES_MAXROUNDS + 1)];	/* encrypt key schedule */
+    uint32_t dk[4*(AES_MAXROUNDS + 1)];	/* decrypt key schedule */
 } rijndael_ctx;
 
 struct rijndael_ctx_t {
-	int enc_only;
-	int Nr;
-	uint32_t ek[4*(AES_MAXROUNDS+1)];
-	uint32_t dk[4*(AES_MAXROUNDS+1)];
+    int enc_only;
+    int Nr;
+    uint32_t ek[4*(AES_MAXROUNDS+1)];
+    uint32_t dk[4*(AES_MAXROUNDS+1)];
 };
 
 int rijndael_set_key(rijndael_ctx *, const uint8_t *, int);
@@ -34,6 +34,12 @@ void rijndaelEncrypt(const uint32_t *, int, const uint8_t *, uint8_t *);
 int rijndael_init(struct rijndael_ctx_t *ctx, const uint8_t *key,
     uint32_t klen);
 int rijndael_release(struct rijndael_ctx_t *ctx);
+int rijndael_decrypt_cbc(struct rijndael_ctx_t *ctx, uint64_t iv,
+    const uint8_t* ct, uint32_t ct_len, uint8_t* out);
+int rijndael_encrypt_cbc(struct rijndael_ctx_t *ctx, uint64_t iv,
+    const uint8_t* pt, uint32_t pt_len, uint8_t* out);
+
+/* TODO: Encrypt and decrypt using the CTR mode of operation. */
 int rijndael_decrypt_ctr(struct rijndael_ctx_t *ctx, uint64_t iv,
     const uint8_t *ct, uint32_t ct_len, uint8_t* out);
 int rijndael_encrypt_ctr(struct rijndael_ctx_t *ctx, uint64_t iv,
